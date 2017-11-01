@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </head>
+    <body>
+        <h1> creer un projet.</h1>
+        {% for flash_message in app.session.flashBag.get('danger') %}
+            <div class="alert alert-success animated flash" role="alert"> {{ flash_message }}</div>
+        {% endfor %}
+        {% for flash_message in app.session.flashBag.get('success') %}
+            <div class="alert alert-danger animated flash" role="alert"> {{ flash_message }}</div>
+        {% endfor %}
+        {{ form_start(form) }}
+            {{ form_label(form.nom) }}
+            {{ form_widget(form.nom) }}
+            {{ form_errors(form.nom) }}
+
+            {{ form_label(form.resume) }}
+            {{ form_widget(form.resume) }}
+            {{ form_errors(form.resume) }}
+
+            {{ form_label(form.illustrations) }}
+            {{ form_errors(form.illustrations) }}
+
+            <ul id="illustration-list"
+                data-prototype="{{ form_widget(form.illustrations.vars.prototype)|e }}">
+                {% for illustration in form.illustrations %}
+                    <li>
+                        {{ form_widget(illustration) }}
+                        {{ form_errors(illustration) }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <a href="#" id="add-another-illustration">Ajouter une autre illustrations</a><br />
+
+            {{ form_label(form.technologies) }}
+            {{ form_widget(form.technologies) }}
+            {{ form_errors(form.technologies) }}
+            
+            {{ form_label(form.langages) }}
+            {{ form_widget(form.langages) }}
+            {{ form_errors(form.langages) }}
+            <br />
+            {{ form_label(form.pdf) }}
+            {{ form_widget(form.pdf) }}
+            {{ form_errors(form.pdf) }}
+
+            {{ form_label(form.source) }}
+            {{ form_widget(form.source) }}
+            {{ form_errors(form.source) }}
+
+            <button type="submit">Register!</button>
+        {{ form_end(form) }}
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!--Import jQuery before materialize.js-->
+
+        <script type="text/javascript">
+            // keep track of how many email fields have been rendered
+            var illustrationCount = '{{ form.illustrations|length }}';
+
+            jQuery(document).ready(function () {
+                jQuery('#add-another-illustration').click(function (e) {
+                    e.preventDefault();
+
+                    var illustrationList = jQuery('#illustration-list');
+
+                    // grab the prototype template
+                    var newWidget = illustrationList.attr('data-prototype');
+                    // replace the "__name__" used in the id and name of the prototype
+                    // with a number that's unique to your emails
+                    // end name attribute looks like name="contact[emails][2]"
+                    newWidget = newWidget.replace(/__name__/g, illustrationCount);
+                    illustrationCount++;
+
+                    // create a new list element and add it to the list
+                    var newLi = jQuery('<li></li>').html(newWidget);
+                    newLi.appendTo(illustrationList);
+                });
+            });
+        </script>
+    </body>
+</html>

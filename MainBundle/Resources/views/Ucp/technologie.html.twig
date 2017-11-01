@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="{{asset('materialize/css/materialize.min.css')}}"  media="screen,projection"/>
+    </head>
+    <body>
+        <h1> creer une technologie.</h1>
+        {% for flash_message in app.session.flashBag.get('success') %}
+            <div class="alert alert-success animated flash" role="alert"> {{ flash_message }}</div>
+        {% endfor %}
+        {% for flash_message in app.session.flashBag.get('success') %}
+            <div class="alert alert-danger animated flash" role="alert"> {{ flash_message }}</div>
+        {% endfor %}
+        {{ form_start(form) }}
+        {{ form_label(form.nom) }}
+        {{ form_widget(form.nom) }}
+        {{ form_errors(form.nom) }}
+
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+
+        <button type="submit">Register!</button>
+        {{ form_end(form) }}
+
+        <h2>Technologie déja disponible:</h2>
+        {%for technologie in technologies %}
+            <strong> {{technologie.nom}}</strong> <br /> <blockquote>{{technologie.description}}</blockquote><br />
+        {% endfor %}  
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="{{asset('materialize/js/materialize.min.js')}}"></script>
+    </body>
+</html>
